@@ -7,12 +7,16 @@ import constants
 
 def push_img():
     s3 = boto3.client("s3")
-    with open(constants.BUCKET_NAME_FILE_NAME, "r") as f:
-        s3.upload_file(
-            constants.IMG_NAME,
-            f.read(),
-            get_session_key() + "/" + str(int(time.time())) + ".png",
-        )
+    s3.upload_file(
+        constants.IMG_NAME,
+        get_bucket_name(),
+        get_session_key() + "/" + str(int(time.time())) + ".png",
+    )
+
+
+def get_bucket_name():
+    with open(constants.BUCKET_NAME_FILE_NAME) as f:
+        return f.read()
 
 
 def set_session_key():
