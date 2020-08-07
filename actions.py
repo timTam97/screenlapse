@@ -17,7 +17,9 @@ def push_img():
 
 def set_session_key():
     """ Used to organise folders in S3.
-    Should make life easier when it comes to pulling the images and creating the video. """
+    Should make life easier when it comes to pulling the images and creating the video.
+    Folder names take the form of a unix timestamp representing the time the screen capture session
+    started."""
     with open(constants.SESSION_ID_FILE_NAME, "w") as f:
         f.write(str(int(time.time())))
 
