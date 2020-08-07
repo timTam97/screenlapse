@@ -8,3 +8,5 @@ bucket
 session
 
 *.png
+
+test*.py
