@@ -16,6 +16,7 @@ def random_key(length: int) -> str:
 
 def main():
     bucket_name = "screenshot-storage-" + random_key(25)
+    print("Creating bucket " + bucket_name + "...")
     with open("bucket", "w") as f:
         f.write(bucket_name)
     s3.create_bucket(
@@ -23,6 +24,7 @@ def main():
         Bucket=bucket_name,
         CreateBucketConfiguration={"LocationConstraint": "ap-southeast-2"},
     )
+    print("Done!")
 
 
 if __name__ == "__main__":

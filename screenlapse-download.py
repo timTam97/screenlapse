@@ -23,6 +23,7 @@ def main():
     subprocess.run(["mkdir img"], shell=True)
     file_list = res.get("Contents")
     i = 1
+    print("Downloading images...")
     for obj in file_list:
         print(str(i) + "/" + str(len(file_list)))
         s3.download_file(
