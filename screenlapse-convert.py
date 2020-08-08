@@ -6,21 +6,23 @@ import cv2
 
 
 def main():
-    img_array = []
+    img_list = []
     files = sorted(
         glob.glob(str(pathlib.Path().absolute()) + "\\img\\*"), key=os.path.getmtime
     )
+    # Have a peek at the first image to work out the resolution
+    test_img = cv2.imread(files[0])
+    height, width, _ = test_img.shape
+    size = (width, height)
+
     print("Processing " + str(len(files)) + " images...")
     for file in files:
-        img = cv2.imread(file)
-        height, width, layers = img.shape
-        size = (width, height)
-        img_array.append(img)
+        img_list.append(cv2.imread(file))
     out = cv2.VideoWriter("screenlapse.mp4", cv2.VideoWriter_fourcc(*"mp4v"), 10, size)
-    print("Queueing images for encoding...")
-    for i in range(len(img_array)):
-        out.write(img_array[i])
-    print("Processing video...")
+    print("Creating video...")
+    for i in range(len(img_list)):
+        out.write(img_list[i])
+    print("Finishing up...")
     out.release()
     print("Done!")
 
