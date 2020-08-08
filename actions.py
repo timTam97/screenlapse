@@ -14,7 +14,7 @@ def push_img():
     )
 
 
-def get_bucket_name():
+def get_bucket_name() -> str:
     with open(constants.BUCKET_NAME_FILE_NAME) as f:
         return f.read()
 
@@ -28,7 +28,7 @@ def set_session_key():
         f.write(str(int(time.time())))
 
 
-def get_session_key():
+def get_session_key() -> str:
     with open(constants.SESSION_ID_FILE_NAME, "r") as f:
         return f.read()
 

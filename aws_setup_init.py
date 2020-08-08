@@ -3,10 +3,11 @@ import string
 
 import boto3
 
+# noinspection PyUnresolvedReferences
 s3 = boto3.client("s3")
 
 
-def random_key(length):
+def random_key(length: int) -> str:
     key = []
     for i in range(length):
         key.append(random.choice(string.ascii_lowercase + string.digits))
