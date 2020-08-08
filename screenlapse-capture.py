@@ -2,10 +2,38 @@ import argparse
 import subprocess
 import time
 
+import boto3
 import pyautogui
 
-import actions
 import constants
+
+
+def push_img():
+    s3 = boto3.client("s3")
+    s3.upload_file(
+        constants.IMG_NAME,
+        get_bucket_name(),
+        get_session_key() + "/" + str(int(time.time())) + ".png",
+    )
+
+
+def get_bucket_name() -> str:
+    with open(constants.BUCKET_NAME_FILE_NAME) as f:
+        return f.read()
+
+
+def set_session_key():
+    """ Used to organise folders in S3.
+    Should make life easier when it comes to pulling the images and creating the video.
+    Folder names take the form of a unix timestamp representing the time the screen capture session
+    started."""
+    with open(constants.SESSION_ID_FILE_NAME, "w") as f:
+        f.write(str(int(time.time())))
+
+
+def get_session_key() -> str:
+    with open(constants.SESSION_ID_FILE_NAME, "r") as f:
+        return f.read()
 
 
 def main():
@@ -22,14 +50,14 @@ def main():
         args.time = 5
     if args.time <= 0:
         raise argparse.ArgumentTypeError("Time must be positive")
-    actions.set_session_key()
+    set_session_key()
     i = 1
     while True:
         # grab screenshot
         # push to aws
         # wait 5 secs
         pyautogui.screenshot(constants.IMG_NAME)
-        actions.push_img()
+        push_img()
         subprocess.run(["cls"], shell=True)
         print("Image " + str(i) + " captured and pushed. [ctrl+c to quit]")
         i += 1
