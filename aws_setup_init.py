@@ -15,7 +15,7 @@ def random_key(length: int) -> str:
 
 
 def main():
-    bucket_name = "screenshot-storage-" + random_key(10)
+    bucket_name = "screenshot-storage-" + random_key(25)
     with open("bucket", "w") as f:
         f.write(bucket_name)
     s3.create_bucket(
