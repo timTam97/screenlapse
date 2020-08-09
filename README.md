@@ -25,6 +25,8 @@ Optional arguments:
 
 Usage: `python screenlapse-download.py session_key`
 
+Downloads images from the specified S3 location into `img/`. Exits if this folder already exists.
+
 Positional arguments:
 
   `session_key`  The session key (ie. folder name in S3) to download images from
