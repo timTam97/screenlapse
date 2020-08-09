@@ -18,6 +18,7 @@ def push_img():
     )
 
 
+def handle_args() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-t",
@@ -31,6 +32,11 @@ def push_img():
         args.time = 5
     if args.time <= 0:
         raise argparse.ArgumentTypeError("Time must be positive")
+    return args.time
+
+
+def main():
+    sleep_time = handle_args()
     actions.set_session_key()
     i = 1
     while True:
@@ -42,7 +48,7 @@ def push_img():
         subprocess.run(["cls"], shell=True)
         print("Image " + str(i) + " captured and pushed. [ctrl+c to quit]")
         i += 1
-        time.sleep(args.time)
+        time.sleep(sleep_time)
 
 
 if __name__ == "__main__":
