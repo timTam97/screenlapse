@@ -2,13 +2,22 @@ import argparse
 import subprocess
 import time
 
+import boto3
 import pyautogui
 
 import actions
 import constants
 
 
-def main():
+def push_img():
+    s3 = boto3.client("s3")
+    s3.upload_file(
+        constants.IMG_NAME,
+        actions.get_bucket_name(),
+        actions.get_session_key() + "/" + str(int(time.time())) + ".png",
+    )
+
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-t",
@@ -29,7 +38,7 @@ def main():
         # push to aws
         # wait 5 secs
         pyautogui.screenshot(constants.IMG_NAME)
-        actions.push_img()
+        push_img()
         subprocess.run(["cls"], shell=True)
         print("Image " + str(i) + " captured and pushed. [ctrl+c to quit]")
         i += 1
