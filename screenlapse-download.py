@@ -1,4 +1,5 @@
 import argparse
+import os
 import subprocess
 
 import boto3
@@ -18,9 +19,13 @@ def handle_args():
 
 def main():
     args = handle_args()
+    try:
+        os.mkdir("img")
+    except FileExistsError:
+        print("'img' folder already exists. Exiting...")
+        exit()
     # TODO figure out how to implement pagination (>1000 images)
     res = s3.list_objects_v2(Bucket=actions.get_bucket_name(), Prefix=args.session_key,)
-    subprocess.run(["mkdir img"], shell=True)
     file_list = res.get("Contents")
     i = 1
     print("Downloading images...")
