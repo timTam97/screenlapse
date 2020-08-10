@@ -12,14 +12,15 @@ Then:
 
 ## Image capture
 
-Usage: `python screenlapse-capture.py [-t secs]`
+Usage: `screenlapse-capture.py [-t secs] [-o]`
 
-Captures screenshots on your machine every t seconds. Uploads them to the preconfigured S3 bucket.
+Captures screenshots on your machine every `t` seconds. Uploads them to the preconfigured S3 bucket, or stores them in `img/` if running in offline mode.
 
 Optional arguments:
   
   `-t secs, --time secs`  Number of seconds between screenshots. Default is 3
-
+  
+  `-o, --offline`         Use filesystem for image storage instead of S3
 
 ## Image download
 
