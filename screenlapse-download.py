@@ -1,6 +1,5 @@
 import argparse
 import os
-import subprocess
 
 import boto3
 
@@ -36,7 +35,7 @@ def main():
         file_list.extend(res.get("Contents"))
     print("Downloading images...")
     for i in range(len(file_list)):
-        print(str(i) + "/" + str(len(file_list)))
+        print(str(i + 1) + "/" + str(len(file_list)))
         s3.download_file(
             actions.get_bucket_name(),
             file_list[i].get("Key"),
