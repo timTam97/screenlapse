@@ -29,7 +29,7 @@ def handle_args() -> int:
     )
     args = parser.parse_args()
     if args.time is None:
-        args.time = 5
+        args.time = 3
     if args.time <= 0:
         raise argparse.ArgumentTypeError("Time must be positive")
     return args.time
