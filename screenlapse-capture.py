@@ -54,22 +54,26 @@ def main():
             print("img directory already exists. Exiting...")
             exit()
     i = 1
-    while True:
-        if not offline:
-            pyautogui.screenshot(constants.IMG_NAME)
-            push_img()
-            subprocess.run(["cls"], shell=True)
-            print("Image " + str(i) + " captured and pushed. [ctrl+c to quit]")
-        else:
-            pyautogui.screenshot("img/img" + str(i) + ".png")
-            subprocess.run(["cls"], shell=True)
-            print(
-                "Image "
-                + str(i)
-                + " captured. Running in offline mode. [ctrl+c to quit]"
-            )
-        i += 1
-        time.sleep(sleep_time)
+    try:
+        while True:
+            if not offline:
+                pyautogui.screenshot(constants.IMG_NAME)
+                push_img()
+                subprocess.run(["cls"], shell=True)
+                print("Image " + str(i) + " captured and pushed. [ctrl+c to quit]")
+            else:
+                pyautogui.screenshot("img/img" + str(i) + ".png")
+                subprocess.run(["cls"], shell=True)
+                print(
+                    "Image "
+                    + str(i)
+                    + " captured. Running in offline mode. [ctrl+c to quit]"
+                )
+            i += 1
+            time.sleep(sleep_time)
+    except KeyboardInterrupt:
+        print("Closing down...")
+        exit()
 
 
 if __name__ == "__main__":
