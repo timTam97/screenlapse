@@ -3,8 +3,8 @@ import os
 import subprocess
 import time
 
+import PIL.ImageGrab
 import boto3
-import pyautogui
 
 import actions
 import constants
@@ -34,6 +34,9 @@ def handle_args() -> argparse.Namespace:
         help="Use filesystem for image storage instead of S3",
         action="store_true",
     )
+    parser.add_argument(
+        "-m", "--multi", help="Take multi-monitor screenshots", action="store_true"
+    )
     args = parser.parse_args()
     if args.time is None:
         args.time = 3
@@ -57,12 +60,14 @@ def main():
     try:
         while True:
             if not offline:
-                pyautogui.screenshot(constants.IMG_NAME)
+                PIL.ImageGrab.grab(all_screens=args.multi).save(constants.IMG_NAME)
                 push_img()
                 subprocess.run(["cls"], shell=True)
                 print("Image " + str(i) + " captured and pushed. [ctrl+c to quit]")
             else:
-                pyautogui.screenshot("img/img" + str(i) + ".png")
+                PIL.ImageGrab.grab(all_screens=args.multi).save(
+                    "img/img" + str(i) + ".png"
+                )
                 subprocess.run(["cls"], shell=True)
                 print(
                     "Image "
