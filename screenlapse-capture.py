@@ -13,7 +13,7 @@ import constants
 def push_img():
     s3 = boto3.client("s3")
     s3.upload_file(
-        constants.IMG_NAME,
+        constants.TEMP_IMG_NAME,
         actions.get_bucket_name(),
         actions.get_session_key() + "/" + str(int(time.time())) + ".png",
     )
@@ -45,37 +45,42 @@ def handle_args() -> argparse.Namespace:
     return args
 
 
+def update_strings(offline: bool, counter: int) -> tuple:
+    if offline:
+        save_string = "img/img{}.png".format(str(counter))
+        print_string = "Image {} captured. Running in offline mode. [ctrl+c to quit]".format(
+            str(counter)
+        )
+    else:
+        save_string = constants.TEMP_IMG_NAME
+        print_string = "Image {} captured and pushed. [ctrl+c to quit]".format(
+            str(counter)
+        )
+    return save_string, print_string
+
+
 def main():
     args = handle_args()
     sleep_time = args.time
     offline = args.offline
     actions.set_session_key()
+    i = 1
     if offline:
         try:
             os.mkdir("img")
         except FileExistsError:
             print("img directory already exists. Exiting...")
             exit()
-    i = 1
     try:
         while True:
+            save_string, print_string = update_strings(offline, i)
+            PIL.ImageGrab.grab(all_screens=args.multi).save(save_string)
             if not offline:
-                PIL.ImageGrab.grab(all_screens=args.multi).save(constants.IMG_NAME)
                 push_img()
-                subprocess.run(["cls"], shell=True)
-                print("Image " + str(i) + " captured and pushed. [ctrl+c to quit]")
-            else:
-                PIL.ImageGrab.grab(all_screens=args.multi).save(
-                    "img/img" + str(i) + ".png"
-                )
-                subprocess.run(["cls"], shell=True)
-                print(
-                    "Image "
-                    + str(i)
-                    + " captured. Running in offline mode. [ctrl+c to quit]"
-                )
-            i += 1
+            subprocess.run(["cls"], shell=True)
+            print(print_string)
             time.sleep(sleep_time)
+            i += 1
     except KeyboardInterrupt:
         print("Closing down...")
         exit()
