@@ -1,14 +1,14 @@
 # screenlapse
 
 ## Getting started
-Setup your AWS environment to allow programmatic S3 access on your machine.
-
-Then:
 
 `pip install -r requirements.txt`
 
-`python aws_setup_init.py`
+If you intend to use online image storage, setup your AWS environment to allow programmatic S3 access on your machine.
 
+Then:
+
+`python aws_setup_init.py`
 
 ## Image capture
 
