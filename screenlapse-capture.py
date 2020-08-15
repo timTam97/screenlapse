@@ -14,7 +14,7 @@ import constants
 def push_img():
     s3 = boto3.client("s3")
     s3.upload_file(
-        constants.TEMP_IMG_NAME,
+        "data/" + constants.TEMP_IMG_NAME,
         actions.get_bucket_name(),
         actions.get_session_key() + "/" + str(int(time.time())) + ".png",
     )
@@ -64,18 +64,19 @@ def main():
     args: argparse.Namespace = handle_args()
     sleep_time: int = args.time
     offline: bool = args.offline
+    actions.create_data_dir()
     actions.set_session_key()
     i = 1
     if offline:
         try:
-            os.mkdir("img")
+            os.mkdir("data/img")
         except FileExistsError:
             print("img directory already exists. Exiting...")
             exit()
     try:
         while True:
             save_string, print_string = update_strings(offline, i)
-            PIL.ImageGrab.grab(all_screens=args.multi).save(save_string)
+            PIL.ImageGrab.grab(all_screens=args.multi).save("data/" + save_string)
             if not offline:
                 push_img()
             subprocess.run(["cls"], shell=True)

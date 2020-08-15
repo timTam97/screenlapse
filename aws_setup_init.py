@@ -3,6 +3,9 @@ import string
 
 import boto3
 
+import actions
+
+
 # noinspection PyUnresolvedReferences
 s3 = boto3.client("s3")
 
@@ -17,7 +20,8 @@ def random_key(length: int) -> str:
 def main():
     bucket_name = "screenshot-storage-" + random_key(25)
     print("Creating bucket " + bucket_name + "...")
-    with open("bucket", "w") as f:
+    actions.create_data_dir()
+    with open("data/bucket", "w") as f:
         f.write(bucket_name)
     s3.create_bucket(
         ACL="private",

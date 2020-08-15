@@ -19,7 +19,7 @@ def handle_args():
 def main():
     args = handle_args()
     try:
-        os.mkdir("img")
+        os.mkdir("data/img")
     except FileExistsError:
         print("'img' folder already exists. Exiting...")
         exit()
@@ -39,7 +39,7 @@ def main():
         s3.download_file(
             actions.get_bucket_name(),
             file_list[i].get("Key"),
-            "img\\img" + str(i) + ".png",
+            "data\\img\\img" + str(i) + ".png",
         )
 
 

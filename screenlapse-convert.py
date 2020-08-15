@@ -1,13 +1,16 @@
 import glob
 import os
 import pathlib
+import subprocess
+import sys
 
 import cv2
 
 
 def main():
     files = sorted(
-        glob.glob(str(pathlib.Path().absolute()) + "\\img\\*"), key=os.path.getmtime
+        glob.glob(str(pathlib.Path().absolute()) + "\\data\\img\\*"),
+        key=os.path.getmtime,
     )
     # Have a peek at the first image to work out the resolution
     test_img = cv2.imread(files[0])
@@ -21,6 +24,8 @@ def main():
     print("Finishing up...")
     out.release()
     print("Done!")
+    if sys.platform == "win32":
+        subprocess.run(["explorer.exe", "."], shell=True)
 
 
 if __name__ == "__main__":
