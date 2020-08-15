@@ -2,6 +2,7 @@ import argparse
 import os
 import subprocess
 import time
+from typing import Tuple
 
 import PIL.ImageGrab
 import boto3
@@ -45,7 +46,7 @@ def handle_args() -> argparse.Namespace:
     return args
 
 
-def update_strings(offline: bool, counter: int) -> tuple:
+def update_strings(offline: bool, counter: int) -> Tuple[str, str]:
     if offline:
         save_string = "img/img{}.png".format(str(counter))
         print_string = "Image {} captured. Running in offline mode. [ctrl+c to quit]".format(
@@ -60,9 +61,9 @@ def update_strings(offline: bool, counter: int) -> tuple:
 
 
 def main():
-    args = handle_args()
-    sleep_time = args.time
-    offline = args.offline
+    args: argparse.Namespace = handle_args()
+    sleep_time: int = args.time
+    offline: bool = args.offline
     actions.set_session_key()
     i = 1
     if offline:
