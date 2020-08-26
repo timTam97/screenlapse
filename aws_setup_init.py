@@ -5,7 +5,6 @@ import boto3
 
 import actions
 
-
 # noinspection PyUnresolvedReferences
 s3 = boto3.client("s3")
 

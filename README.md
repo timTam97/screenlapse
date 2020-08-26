@@ -14,7 +14,7 @@ Then:
 
 Usage: `screenlapse-capture.py [-t secs] [-o] [-m]`
 
-Captures screenshots on your machine every `t` seconds. Uploads them to the preconfigured S3 bucket, or stores them in `img/` if running in offline mode.
+Captures screenshots on your machine every `t` seconds. Uploads them to the preconfigured S3 bucket, or stores them in `data/img/` if running in offline mode.
 
 Optional arguments:
   
@@ -28,7 +28,7 @@ Optional arguments:
 
 Usage: `python screenlapse-download.py session_key`
 
-Downloads images from the specified S3 location into `img/`. Exits if this folder already exists.
+Downloads images from the specified S3 location into `data/img/`. Exits if this folder already exists.
 
 Positional arguments:
 
@@ -39,4 +39,4 @@ Positional arguments:
 
 Usage: `python screenlapse-convert.py`
 
-Converts the images in `img/` into a 10fps mp4 video. Images are ordered by their last modified date.
+Converts the images in `data/img/` into a 10fps mp4 video. Images are ordered by their last modified date.

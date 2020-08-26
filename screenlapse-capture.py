@@ -4,8 +4,8 @@ import subprocess
 import time
 from typing import Tuple
 
-import PIL.ImageGrab
 import boto3
+import PIL.ImageGrab
 
 import actions
 import constants
