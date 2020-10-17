@@ -10,6 +10,8 @@ Then:
 
 `python aws_setup_init.py`
 
+This file creates a new bucket on S3 and saves the name of the newly created bucket.
+
 ## Image capture
 
 Usage: `screenlapse-capture.py [-t secs] [-o] [-m]`
@@ -23,6 +25,8 @@ Optional arguments:
   `-o, --offline`         Use filesystem for image storage instead of S3
   
   `-m, --multi`           Take multi-monitor screenshots
+  
+If you're uploading to S3, screenshots are organised into folders, with the folder name being the unix timestamp of when the current screenshot capture session first started. When downloading images (see next step), first find the folder on the S3 console, and then use this folder name as the `session_key` when you call `screenlapse-download.py`.
 
 ## Image download
 
